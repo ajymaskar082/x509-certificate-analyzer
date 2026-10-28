@@ -6,7 +6,7 @@
 
 ## Қолданылатын технологиялар
 
-- Java 25
+- Java 17
 - Apache Maven
 - JUnit 5
 - Java Security API (`CertificateFactory`, `X509Certificate`)
@@ -72,24 +72,11 @@ Student project — Cybersecurity
 
 ```bash
 mvn clean package
-java -cp target/classes kz.edu.cybersecurity.Main certificate.pem 
+java -cp target/classes kz.edu.cybersecurity.Main certificate.pem
 ```
 
 Мұндағы `certificate.pem` — талданатын X.509 сертификатының PEM форматындағы файлы.
 
-## Тестілеу
-
-Жоба JUnit 5 көмегімен тексеріледі. Тесттерді іске қосу үшін:
-
-```bash
-mvn test
-```
-
-Тесттер сертификат файлын оқу, файлдың бар-жоғын тексеру және қате файлдарды өңдеу жағдайларын қамтиды.
-
-## Қауіпсіздік ескертуі
-
-Бағдарлама сертификаттың негізгі ақпаратын көрсетеді. Сертификаттың жарамдылық мерзімін көрсету оның сенімді екенін немесе цифрлық қолтаңбасы дұрыс екенін толық дәлелдемейді. Сертификаттың сенімділігін жеке тексеру қажет.
 
 ## Лицензия
 
