@@ -72,7 +72,7 @@ Student project — Cybersecurity
 
 ```bash
 mvn clean package
-java -cp target/classes kz.edu.cybersecurity.Main certificate.pem
+java -cp target/classes kz.edu.cybersecurity.Main certificate.pem 
 ```
 
 Мұндағы `certificate.pem` — талданатын X.509 сертификатының PEM форматындағы файлы.
