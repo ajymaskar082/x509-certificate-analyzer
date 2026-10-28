@@ -108,4 +108,60 @@ class CertificateAnalyzerTest {
 
         assertThrows(Exception.class, () -> analyzer.analyze(tempDir));
     }
+
+    @Test
+    void nullPathThrowsException() {
+        CertificateAnalyzer analyzer = new CertificateAnalyzer();
+
+        assertThrows(Exception.class, () -> analyzer.analyze(null));
+    }
+
+    @Test
+    void fileWithOnlyPemHeaderThrowsException(@TempDir Path tempDir)
+            throws Exception {
+        Path file = tempDir.resolve("header-only.pem");
+        Files.writeString(file, "-----BEGIN CERTIFICATE-----");
+
+        CertificateAnalyzer analyzer = new CertificateAnalyzer();
+
+        assertThrows(Exception.class, () -> analyzer.analyze(file));
+    }
+
+    @Test
+    void nonCertificatePemContentThrowsException(@TempDir Path tempDir)
+            throws Exception {
+        Path file = tempDir.resolve("wrong-content.pem");
+        Files.writeString(file,
+                "-----BEGIN CERTIFICATE-----\n"
+                        + "YWJjZGVm\n"
+                        + "-----END CERTIFICATE-----");
+
+        CertificateAnalyzer analyzer = new CertificateAnalyzer();
+
+        assertThrows(Exception.class, () -> analyzer.analyze(file));
+    }
+
+    @Test
+    void textFileWithPemExtensionThrowsException(@TempDir Path tempDir)
+            throws Exception {
+        Path file = tempDir.resolve("not-a-certificate.pem");
+        Files.writeString(file, "ordinary text, not a certificate");
+
+        CertificateAnalyzer analyzer = new CertificateAnalyzer();
+
+        assertThrows(Exception.class, () -> analyzer.analyze(file));
+    }
+
+    @Test
+    void repeatedInvalidInputStillThrowsException(@TempDir Path tempDir)
+            throws Exception {
+        Path file = tempDir.resolve("repeated-invalid.pem");
+        Files.writeString(file, "invalid");
+
+        CertificateAnalyzer analyzer = new CertificateAnalyzer();
+
+        assertThrows(Exception.class, () -> analyzer.analyze(file));
+        assertThrows(Exception.class, () -> analyzer.analyze(file));
+    }
+
 }
